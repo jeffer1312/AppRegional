@@ -9,10 +9,17 @@ import {
 } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import { Audio } from "expo-av";
+import { RectButton } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 //Audio.setAudioModeAsync({ staysActiveInBackground: true });
 
-export default function App() {
+const Content = () => {
+  const navigation = useNavigation();
+  function handleNavigateToSocials() {
+    navigation.navigate("Socials");
+    
+  }
   const StreamAudio = new Audio.Sound();
 
   // async function load() {
@@ -69,48 +76,41 @@ export default function App() {
   }
 
   return (
-    <>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent
-      />
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity>
-            <Icon style={styles.menu} name="menu" color="#fff" size={30} />
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity>
+          <Icon style={styles.menu} name="menu" color="#fff" size={30} />
+        </TouchableOpacity>
+        <Text style={styles.text}>Radio Regional Fm 88.5</Text>
+        <TouchableOpacity>
+          <Icon style={styles.share} name="share-2" color="#fff" size={30} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.main}>
+        <Image
+          resizeMethod="auto"
+          style={styles.image}
+          source={require("./src/assets/background.jpg")}
+        />
+      </View>
+      <View style={styles.controls}>
+        <Text style={styles.programacao}>{programacao()}</Text>
+        <View style={styles.viewButton}>
+          <TouchableOpacity style={styles.button} onPress={handlePlay}>
+            <Text style={styles.buttonText}>
+              <Icon name="play" color="#fff" size={24} />
+            </Text>
           </TouchableOpacity>
-          <Text style={styles.text}>Radio Regional Fm 88.5</Text>
-          <TouchableOpacity>
-            <Icon style={styles.share} name="share-2" color="#fff" size={30} />
+          <TouchableOpacity style={styles.button} onPress={handlePause}>
+            <Text style={styles.buttonText}>
+              <Icon name="pause" color="#fff" size={24} />
+            </Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.main}>
-          <Image
-            resizeMethod="auto"
-            style={styles.image}
-            source={require("./src/assets/background.jpg")}
-          />
-        </View>
-        <View style={styles.controls}>
-          <Text style={styles.programacao}>{programacao()}</Text>
-          <View style={styles.viewButton}>
-            <TouchableOpacity style={styles.button} onPress={handlePlay}>
-              <Text style={styles.buttonText}>
-                <Icon name="play" color="#fff" size={24} />
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handlePause}>
-              <Text style={styles.buttonText}>
-                <Icon name="pause" color="#fff" size={24} />
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
-    </>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -183,3 +183,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+export default Content;
